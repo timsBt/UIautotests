@@ -1,7 +1,6 @@
 package pages;
 
 import io.qameta.allure.Step;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,7 +14,7 @@ public class MainPage {
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
     @FindBy(xpath = "//input[@id=\"username\"]")
@@ -99,20 +98,17 @@ public class MainPage {
         return this;
     }
 
-
     @Step("Ввод значения в поле Password")
     public MainPage passwordInput(String password) {
         getPassword().sendKeys(password);
         return this;
     }
 
-
     @Step("Ввод значения в поле Username*")
     public MainPage userName2Input(String username2) {
         getUserName2().sendKeys(username2);
         return this;
     }
-
 
     @Step("Клик по кнопке Login")
     public MainPage loginButtonClick() {

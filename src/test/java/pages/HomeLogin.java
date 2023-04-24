@@ -13,7 +13,7 @@ public class HomeLogin {
 
     public HomeLogin(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
     @FindBy(xpath =  "//h1[@class =  'ng-scope']")

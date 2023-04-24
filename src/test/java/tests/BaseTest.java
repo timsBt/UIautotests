@@ -1,6 +1,8 @@
 package tests;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import utils.WebDriverChrome;
 import java.time.Duration;
 
