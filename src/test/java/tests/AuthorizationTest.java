@@ -10,9 +10,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomeLogin;
 import pages.MainPage;
+import utils.ExecutorUtils;
+
 import static utils.ValueProperties.valueProperties;
 
 @Epic(value = "UI Tests")
@@ -21,11 +24,19 @@ public class AuthorizationTest extends BaseTest {
 
     private MainPage mainPage;
     private HomeLogin homeLogin;
+    private ExecutorUtils executor;
+    public static final String MAIN_URL = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
 
     @BeforeClass
     public void setPages() {
         mainPage = new MainPage(driver);
         homeLogin = new HomeLogin(driver);
+        executor = new ExecutorUtils();
+    }
+
+    @BeforeMethod
+    public void setgetDriver() {
+        driver.get(MAIN_URL);
     }
 
     @Test(description = "TC-1 Авторизация с валидными данными")
@@ -184,5 +195,23 @@ public class AuthorizationTest extends BaseTest {
             .loginButtonClick();
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessageError"));
     }
-}
 
+    @Test(description = "Отвод фокуса с поля ввода")
+    @Feature(value = "Проверка работы JavaScriptExecutor")
+    @Description("Отвод фокуса с поля ввода Username")
+    public void executorFocus() {
+        mainPage.getUserName().click();
+        executor.shiftFocusFromUsernameField();
+        Assert.assertFalse(mainPage.getUserName().equals(driver.switchTo().activeElement()));
+    }
+
+    @Test(description = "Проверка на отсутствие скролла на странице")
+    @Feature(value = "Проверка работы JavaScriptExecutor")
+    @Description("Проверка скролла")
+    public void executorScroll() {
+        boolean scrollVertical = executor.executeScriptHeight();
+        boolean scrollHorizontal = executor.executeScriptWidth();
+        boolean result = scrollVertical && scrollHorizontal;
+        Assert.assertFalse(result);
+    }
+}

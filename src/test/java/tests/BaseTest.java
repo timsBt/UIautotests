@@ -1,15 +1,18 @@
 package tests;
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import utils.WebDriverChrome;
 import java.time.Duration;
 
 public class BaseTest {
 
-   public static WebDriver driver;
-   public static final String MAIN_URL = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
+    public static WebDriver driver;
 
     @BeforeClass
     public void setUp() {
@@ -18,13 +21,20 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    @BeforeMethod
-    public void setgetDriver() {
-        driver.get(MAIN_URL);
-    }
-
     @AfterClass
     public void tearDown() {
         driver.quit();
+    }
+
+    @AfterMethod
+    public void testFailure(ITestResult testResult) {
+        if (testResult.FAILURE == testResult.getStatus()) {
+            makeScreenshot(((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES));
+        }
+    }
+
+    @Attachment(value = "Attachment Screenshot", type = "image/png")
+    public byte[] makeScreenshot(byte[] screenShot) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
