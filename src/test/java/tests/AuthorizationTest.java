@@ -9,12 +9,14 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomeLogin;
 import pages.MainPage;
 import static utils.ValueProperties.valueProperties;
 
 @Epic(value = "UI Tests")
+@Listeners(utils.ListenersUtils.class)
 public class AuthorizationTest extends BaseTest {
 
     private MainPage mainPage;
@@ -155,6 +157,32 @@ public class AuthorizationTest extends BaseTest {
                 {valueProperties("invalidUsername"), valueProperties("invalidPassword"), valueProperties("username2"), false},
                 {valueProperties("invalidUsername2"), valueProperties("invalidPassword2"), valueProperties("username3"), false}};
         return data;
+    }
+
+    @Test(description = "TC-10 Падающий тест - Проверка создания скриншота")
+    @Feature(value = "Падающие тесты")
+    @Story(value = "Проверка создания скриншота")
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @Description("Падающий тест - Проверка создания скриншота")
+    public void validLoginErrorTest() {
+        mainPage.userNameInput(valueProperties("username"))
+            .passwordInput(valueProperties("password"))
+            .userName2Input(valueProperties("username2"))
+            .loginButtonClick();
+        Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessageError"));
+    }
+
+    @Test(description = "TC-11 Падающий тест - Проверка создания скриншота")
+    @Feature(value = "Падающие тесты")
+    @Story(value = "Проверка создания скриншота")
+    @Severity(value = SeverityLevel.TRIVIAL)
+    @Description("Падающий тест - Проверка создания скриншота")
+    public void inValidLoginErrorTest() {
+        mainPage.userNameInput(valueProperties("invalidUsername"))
+            .passwordInput(valueProperties("invalidPassword"))
+            .userName2Input(valueProperties("username2"))
+            .loginButtonClick();
+        Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessageError"));
     }
 }
 
