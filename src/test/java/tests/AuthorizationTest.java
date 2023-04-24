@@ -8,14 +8,14 @@ import io.qameta.allure.Description;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomeLogin;
 import pages.MainPage;
-
 import static utils.ValueProperties.valueProperties;
 
 @Epic(value = "UI Tests")
-public class AuthorizationTest extends BaseTest{
+public class AuthorizationTest extends BaseTest {
 
     private MainPage mainPage;
     private HomeLogin homeLogin;
@@ -40,7 +40,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
     }
 
-    @Test (description = "TC-2 Авторизация с НЕвалидными данными")
+    @Test(description = "TC-2 Авторизация с НЕвалидными данными")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -53,7 +53,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test (description = "TC-3 Ввод корректного логина и некорректного пароля")
+    @Test(description = "TC-3 Ввод корректного логина и некорректного пароля")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -66,7 +66,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test (description = "TC-4 Ввод некорректного логина и корректного пароля")
+    @Test(description = "TC-4 Ввод некорректного логина и корректного пароля")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -79,7 +79,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test (description = "TC-5 Проверка поля Username пустым значением")
+    @Test(description = "TC-5 Проверка поля Username пустым значением")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -91,7 +91,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessageUnderFields(), valueProperties("messageUnderTheFields"));
     }
 
-    @Test (description = "TC-6 Проверка поля Password пустым значением")
+    @Test(description = "TC-6 Проверка поля Password пустым значением")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -103,20 +103,20 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessageUnderFields(), valueProperties("messageUnderTheFields"));
     }
 
-    @Test (description = "TC-7 Ввод одного символа в поле Username")
+    @Test(description = "TC-7 Ввод одного символа в поле Username")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.NORMAL)
     @Description("Авторизация с одним символом Username")
     public void oneSimbolUserNameTest() {
-       mainPage.userNameInput(valueProperties("oneSymbol"))
+        mainPage.userNameInput(valueProperties("oneSymbol"))
            .passwordInput(valueProperties("password"))
            .userName2Input(valueProperties("username2"))
            .loginButtonClick();
         Assert.assertEquals(mainPage.textCheckOneSymbolMessage(), valueProperties("oneSymbolMessageUsername"));
     }
 
-    @Test (description = "TC-8 Ввод одного символа в поле Password")
+    @Test(description = "TC-8 Ввод одного символа в поле Password")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -127,6 +127,34 @@ public class AuthorizationTest extends BaseTest{
             .userName2Input(valueProperties("username2"))
             .loginButtonClick();
         Assert.assertEquals(mainPage.textCheckOneSymbolMessage(), valueProperties("oneSymbolMessagePassword"));
+    }
+
+    @Test(description = "TC-9 Авторизация с валидными и НЕвалидными данными",
+            dataProvider = "LoginDataProvider", dataProviderClass = AuthorizationTest.class)
+    @Feature(value = "Проверка авторизации")
+    @Story(value = "Валидные и НЕвалидные значения")
+    @Severity(value = SeverityLevel.BLOCKER)
+    @Description("Авторизация с валидными и НЕ валидными данными")
+    public void validInvalidLoginTest(String userName, String password, String username2, Boolean expectResult) {
+        mainPage.userNameInput(userName)
+            .passwordInput(password)
+            .userName2Input(username2)
+            .loginButtonClick();
+        if (expectResult) {
+            Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
+            Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
+        } else {
+            Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
+        }
+    }
+
+    @DataProvider(name = "LoginDataProvider")
+    private Object[][] getData() {
+        Object[][] data = {{valueProperties("username"), valueProperties("password"), valueProperties("username2"), true},
+                {valueProperties("username"), valueProperties("password"), valueProperties("username3"), true},
+                {valueProperties("invalidUsername"), valueProperties("invalidPassword"), valueProperties("username2"), false},
+                {valueProperties("invalidUsername2"), valueProperties("invalidPassword2"), valueProperties("username3"), false}};
+        return data;
     }
 }
 
