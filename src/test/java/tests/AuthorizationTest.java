@@ -16,7 +16,7 @@ import pages.HomeLogin;
 import pages.MainPage;
 import utils.ExecutorUtils;
 
-import static utils.ValueProperties.valueProperties;
+import static utils.PropertiesUtils.valueProperties;
 
 @Epic(value = "UI Tests")
 @Listeners(utils.ListenersUtils.class)

@@ -13,8 +13,9 @@ public class SqlPage {
 
     public SqlPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
+
     @FindBy(xpath = "//input[@name=\"login\"]")
     private WebElement login;
 
@@ -26,6 +27,13 @@ public class SqlPage {
 
     @FindBy(xpath = "//a[@href=\"/personal.php\"]")
     private WebElement name;
+
+    @FindBy(xpath = "//img[@title=\"Выход...\"]")
+    private WebElement exit;
+
+    public WebElement getExit() {
+        return exit;
+    }
 
     public WebElement getName() {
         openElement(name);
@@ -56,21 +64,17 @@ public class SqlPage {
         return getName().getText();
     }
 
-    @Step("Ввод значения в поле Логин")
-    public SqlPage loginInput(String username) {
-        getLogin().sendKeys(username);
-        return this;
-    }
-
-    @Step("Ввод значения в поле Пароль")
-    public SqlPage passwordInput(String password) {
+    @Step("Ввод логина, пароля и нажатие кнопки Вход")
+    public SqlPage loginSql(String name, String password) {
+        getLogin().sendKeys(name);
         getPassword().sendKeys(password);
+        getEmptyButton().click();
         return this;
     }
 
-    @Step("Клик по кнопке Вход")
-    public SqlPage emptyButtonClick() {
-        getEmptyButton().click();
+    @Step("Деавторизация")
+    public SqlPage logOut() {
+        getExit().click();
         return this;
     }
 }
