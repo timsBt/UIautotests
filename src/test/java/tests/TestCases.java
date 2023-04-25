@@ -18,7 +18,7 @@ public class TestCases {
     MainPage mainPage = new MainPage(driver);
     HomeLogin homeLogin = new HomeLogin(driver);
 
-    @BeforeTest
+    @BeforeMethod
     public void SetUp() {
         driver.get(mainPage.pageUrl);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -95,7 +95,7 @@ public class TestCases {
     }
 
 
-    @AfterTest
+    @AfterMethod
     public void tearDown(){
         driver.quit();
     }
