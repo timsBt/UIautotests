@@ -16,8 +16,6 @@ public class MainPage {
         PageFactory.initElements(driver,this);
     }
 
-    public String pageUrl = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
-
     @FindBy(xpath = "//input[@id=\"username\"]")
     private WebElement userName;
 
@@ -111,28 +109,23 @@ public class MainPage {
         return getOneSymbolMessagePassword().getText();
     }
 
-    public MainPage login (String username, String password, String username2){
+    public MainPage userNameInput (String username){
         getUserName().sendKeys(username);
+        return this;
+    }
+
+    public MainPage passwordInput (String password){
         getPassword().sendKeys(password);
+        return this;
+    }
+
+    public MainPage userName2Input (String username2){
         getUserName2().sendKeys(username2);
+        return this;
+    }
+
+    public MainPage loginButtonClick (){
         getLoginButton().click();
         return this;
     }
-
-    public MainPage usernameErrorMessage (String password, String username2){
-        getUserName().click();
-        getPassword().sendKeys(password);
-        getUserName2().sendKeys(username2);
-        return this;
-    }
-
-    public MainPage passwordErrorMessage (String username, String username2){
-        getUserName().sendKeys(username);
-        getPassword().click();
-        getUserName2().sendKeys(username2);
-        return this;
-    }
-
-
-
 }
