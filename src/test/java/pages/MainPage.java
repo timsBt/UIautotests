@@ -99,20 +99,17 @@ public class MainPage {
         return this;
     }
 
-
     @Step("Ввод значения в поле Password")
     public MainPage passwordInput(String password) {
         getPassword().sendKeys(password);
         return this;
     }
 
-
     @Step("Ввод значения в поле Username*")
     public MainPage userName2Input(String username2) {
         getUserName2().sendKeys(username2);
         return this;
     }
-
 
     @Step("Клик по кнопке Login")
     public MainPage loginButtonClick() {
