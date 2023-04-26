@@ -14,6 +14,7 @@ import pages.MainPage;
 
 import static utils.ValueProperties.valueProperties;
 
+@Epic(value = "UI Tests")
 public class AuthorizationTest extends BaseTest{
 
     private MainPage mainPage;
@@ -39,8 +40,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-2 Авторизация с НЕвалидными данными")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -53,8 +53,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-3 Ввод корректного логина и некорректного пароля")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -67,8 +66,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-4 Ввод некорректного логина и корректного пароля")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -81,8 +79,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-5 Проверка поля Username пустым значением")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -94,8 +91,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessageUnderFields(), valueProperties("messageUnderTheFields"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-6 Проверка поля Password пустым значением")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -107,8 +103,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckErrorMessageUnderFields(), valueProperties("messageUnderTheFields"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-7 Ввод одного символа в поле Username")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.NORMAL)
@@ -121,8 +116,7 @@ public class AuthorizationTest extends BaseTest{
         Assert.assertEquals(mainPage.textCheckOneSymbolMessage(), valueProperties("oneSymbolMessageUsername"));
     }
 
-    @Test
-    @Epic(value = "Негативные тесты")
+    @Test (description = "TC-8 Ввод одного символа в поле Password")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
