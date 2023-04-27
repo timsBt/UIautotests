@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,24 +23,27 @@ public class HomeLogin {
     private WebElement loginInMessage;
 
     public WebElement getHomeMessage() {
-        checkOpen(homeMessage);
+        openElement(homeMessage);
         return homeMessage;
     }
 
     public WebElement getLoginInMessage() {
-        checkOpen(loginInMessage);
+        openElement(loginInMessage);
         return loginInMessage;
     }
 
-    public String textCheck (){
+    @Step("Получение Сообщения HOME")
+    public String textCheck() {
         return getHomeMessage().getText();
     }
 
-    public String textCheck2 (){
+    @Step("Получение Сообщения You're logged in!!")
+    public String textCheck2() {
         return getLoginInMessage().getText();
     }
 
-    public void checkOpen(WebElement element){
+    public void openElement(WebElement element) {
         Assert.assertTrue(element.isDisplayed());
     }
 }
+
