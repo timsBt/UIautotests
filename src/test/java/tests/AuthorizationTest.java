@@ -11,7 +11,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.HomeLogin;
 import pages.MainPage;
-
 import static utils.ValueProperties.valueProperties;
 
 @Epic(value = "UI Tests")
