@@ -8,6 +8,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomeLogin;
 import pages.MainPage;
@@ -108,7 +109,7 @@ public class AuthorizationTest extends BaseTest{
     @Severity(value = SeverityLevel.NORMAL)
     @Description("Авторизация с одним символом Username")
     public void oneSimbolUserNameTest() {
-       mainPage.userNameInput(valueProperties("oneSymbol"))
+        mainPage.userNameInput(valueProperties("oneSymbol"))
            .passwordInput(valueProperties("password"))
            .userName2Input(valueProperties("username2"))
            .loginButtonClick();
@@ -126,6 +127,35 @@ public class AuthorizationTest extends BaseTest{
             .userName2Input(valueProperties("username2"))
             .loginButtonClick();
         Assert.assertEquals(mainPage.textCheckOneSymbolMessage(), valueProperties("oneSymbolMessagePassword"));
+    }
+
+    @Test(description = "TC-9 Авторизация с валидными и НЕвалидными данными",
+            dataProvider = "LoginDataProvider",dataProviderClass = AuthorizationTest.class)
+    @Feature(value = "Проверка авторизации")
+    @Story(value = "Валидные и НЕвалидные значения")
+    @Severity(value = SeverityLevel.BLOCKER)
+    @Description("Авторизация с валидными и НЕ валидными данными")
+    public void validInvalidLoginTest (String userName,String password,String username2) {
+        mainPage.userNameInput(userName)
+            .passwordInput(password)
+            .userName2Input(username2)
+            .loginButtonClick();
+        try {
+        Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
+        Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
+        }
+        catch (Exception e) {
+            Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
+        }
+    }
+
+    @DataProvider(name = "LoginDataProvider")
+    public Object[][] getData() {
+        Object[][] data = {{valueProperties("username"), valueProperties("password"), valueProperties("username2")},
+                {valueProperties("username"), valueProperties("password"), valueProperties("username3")},
+                {valueProperties("invalidUsername"), valueProperties("invalidPassword"), valueProperties("username2")},
+                {valueProperties("invalidUsername2"), valueProperties("invalidPassword2"), valueProperties("username3")}};
+        return data;
     }
 }
 
