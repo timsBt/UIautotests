@@ -135,18 +135,22 @@ public class AuthorizationTest extends BaseTest{
     @Story(value = "Валидные и НЕвалидные значения")
     @Severity(value = SeverityLevel.BLOCKER)
     @Description("Авторизация с валидными и НЕ валидными данными")
-    public void validInvalidLoginTest (String userName,String password,String username2) {
+    public void validInvalidLoginTest(String userName,String password,String username2) {
         mainPage.userNameInput(userName)
             .passwordInput(password)
             .userName2Input(username2)
             .loginButtonClick();
-        try {
-        Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
-        Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
+        if (userName.equals(valueProperties("username"))){
+            if (password.equals(valueProperties("password"))){
+                if (username2.equals(valueProperties("username2")) || username2.equals(valueProperties("username3"))) {
+                    Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
+                    Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
+                }
+            }
         }
-        catch (Exception e) {
+        else {
             Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
-        }
+                }
     }
 
     @DataProvider(name = "LoginDataProvider")
