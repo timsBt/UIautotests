@@ -15,7 +15,7 @@ import pages.MainPage;
 import static utils.ValueProperties.valueProperties;
 
 @Epic(value = "UI Tests")
-public class AuthorizationTest extends BaseTest{
+public class AuthorizationTest extends BaseTest {
 
     private MainPage mainPage;
     private HomeLogin homeLogin;
@@ -140,8 +140,8 @@ public class AuthorizationTest extends BaseTest{
             .passwordInput(password)
             .userName2Input(username2)
             .loginButtonClick();
-        if (userName.equals(valueProperties("username"))){
-            if (password.equals(valueProperties("password"))){
+        if (userName.equals(valueProperties("username"))) {
+            if (password.equals(valueProperties("password"))) {
                 if (username2.equals(valueProperties("username2")) || username2.equals(valueProperties("username3"))) {
                     Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
                     Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
@@ -150,7 +150,7 @@ public class AuthorizationTest extends BaseTest{
         }
         else {
             Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
-                }
+        }
     }
 
     @DataProvider(name = "LoginDataProvider")
