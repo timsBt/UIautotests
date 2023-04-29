@@ -135,30 +135,25 @@ public class AuthorizationTest extends BaseTest {
     @Story(value = "Валидные и НЕвалидные значения")
     @Severity(value = SeverityLevel.BLOCKER)
     @Description("Авторизация с валидными и НЕ валидными данными")
-    public void validInvalidLoginTest(String userName,String password,String username2) {
+    public void validInvalidLoginTest(String userName, String password, String username2, Boolean expectResult) {
         mainPage.userNameInput(userName)
             .passwordInput(password)
             .userName2Input(username2)
             .loginButtonClick();
-        if (userName.equals(valueProperties("username"))) {
-            if (password.equals(valueProperties("password"))) {
-                if (username2.equals(valueProperties("username2")) || username2.equals(valueProperties("username3"))) {
-                    Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
-                    Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
-                }
-            }
-        }
-        else {
+        if (expectResult) {
+            Assert.assertEquals(homeLogin.textCheck(), valueProperties("homeMessage"));
+            Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
+        } else {
             Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
         }
     }
 
     @DataProvider(name = "LoginDataProvider")
     public Object[][] getData() {
-        Object[][] data = {{valueProperties("username"), valueProperties("password"), valueProperties("username2")},
-                {valueProperties("username"), valueProperties("password"), valueProperties("username3")},
-                {valueProperties("invalidUsername"), valueProperties("invalidPassword"), valueProperties("username2")},
-                {valueProperties("invalidUsername2"), valueProperties("invalidPassword2"), valueProperties("username3")}};
+        Object[][] data = {{valueProperties("username"), valueProperties("password"), valueProperties("username2"), true},
+                {valueProperties("username"), valueProperties("password"), valueProperties("username3"), true},
+                {valueProperties("invalidUsername"), valueProperties("invalidPassword"), valueProperties("username2"), false},
+                {valueProperties("invalidUsername2"), valueProperties("invalidPassword2"), valueProperties("username3"), false}};
         return data;
     }
 }
