@@ -1,5 +1,7 @@
 package pages;
 
+import io.qameta.allure.Step;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,7 +24,7 @@ public class MainPage {
     @FindBy(xpath = "//input[@id=\"password\"]")
     private WebElement password;
 
-    @FindBy(xpath = "//input[@id=\"formly_1_input_username_0\"]")
+    @FindBy(xpath = "//input[@ng-model=\"model[options.key]\"]")
     private WebElement userName2;
 
     @FindBy(xpath = "//button[@ng-click=\"Auth.login()\"]")
@@ -32,100 +34,90 @@ public class MainPage {
     private WebElement errorMessage;
 
     @FindBy(xpath = "//div[@ng-message=\"required\"]")
-    private WebElement errorMessageUnderUsername;
-
-    @FindBy(xpath = "//div[@ng-message=\"required\"]")
-    private WebElement errorMessageUnderPassword;
+    private WebElement errorMessageUnderFields;
 
     @FindBy(xpath = "//div[@ng-message=\"minlength, maxlength\"]")
-    private WebElement oneSymbolMessageUsername;
-
-    @FindBy(xpath = "//div[@ng-message=\"minlength, maxlength\"]")
-    private WebElement oneSymbolMessagePassword;
-
+    private WebElement oneSymbolMessage;
 
     public WebElement getUserName() {
-        checkOpen(userName);
+        openElement(userName);
         return userName;
     }
 
     public WebElement getPassword() {
-        checkOpen(password);
+        openElement(password);
         return password;
     }
 
     public WebElement getUserName2() {
-        checkOpen(userName2);
+        openElement(userName2);
         return userName2;
     }
 
     public WebElement getLoginButton() {
-        checkOpen(loginButton);
+        openElement(loginButton);
         return loginButton;
     }
 
     public WebElement getErrorMessage() {
-        checkOpen(errorMessage);
+        openElement(errorMessage);
         return errorMessage;
     }
 
-    public WebElement getErrorMessageUnderUsername() {
-        checkOpen(errorMessageUnderUsername);
-        return errorMessageUnderUsername;
+    public WebElement getErrorMessageUnderFields() {
+        openElement(errorMessageUnderFields);
+        return errorMessageUnderFields;
     }
 
-    public WebElement getErrorMessageUnderPassword() {
-        checkOpen(errorMessageUnderPassword);
-        return errorMessageUnderPassword;
+    public WebElement getOneSymbolMessage() {
+        openElement(oneSymbolMessage);
+        return oneSymbolMessage;
     }
 
-    public WebElement getOneSymbolMessageUsername() {
-        checkOpen(oneSymbolMessageUsername);
-        return oneSymbolMessageUsername;
-    }
-
-    public WebElement getOneSymbolMessagePassword() {
-        checkOpen(oneSymbolMessagePassword);
-        return oneSymbolMessagePassword;
-    }
-
-    public void checkOpen(WebElement element){
+    public void openElement(WebElement element) {
         Assert.assertTrue(element.isDisplayed());
     }
 
-    public String textCheckErrorMessage (){
+    @Step("Проверка сообщения ошибки")
+    public String textCheckErrorMessage() {
         return getErrorMessage().getText();
     }
-    public String textCheckErrorMessageUnderUsername (){
-        return getErrorMessageUnderUsername().getText();
-    }
-    public String textCheckErrorMessageUnderPassword (){
-        return getErrorMessageUnderPassword().getText();
-    }
-    public String textCheckOneSymbolMessageUsername (){
-        return getOneSymbolMessageUsername().getText();
-    }
-    public String textCheckOneSymbolMessagePassword (){
-        return getOneSymbolMessagePassword().getText();
+
+    @Step("Проверка сообщения ошибки под полями")
+    public String textCheckErrorMessageUnderFields() {
+        return getErrorMessageUnderFields().getText();
     }
 
-    public MainPage userNameInput (String username){
+    @Step("Проверка сообщения ошибки ввода Одного символа под полями")
+    public String textCheckOneSymbolMessage() {
+        return getOneSymbolMessage().getText();
+    }
+
+    @Step("Ввод значения в поле Username")
+    public MainPage userNameInput(String username) {
         getUserName().sendKeys(username);
         return this;
     }
 
-    public MainPage passwordInput (String password){
+
+    @Step("Ввод значения в поле Password")
+    public MainPage passwordInput(String password) {
         getPassword().sendKeys(password);
         return this;
     }
 
-    public MainPage userName2Input (String username2){
+
+    @Step("Ввод значения в поле Username*")
+    public MainPage userName2Input(String username2) {
         getUserName2().sendKeys(username2);
         return this;
     }
 
-    public MainPage loginButtonClick (){
+
+    @Step("Клик по кнопке Login")
+    public MainPage loginButtonClick() {
         getLoginButton().click();
         return this;
     }
 }
+
