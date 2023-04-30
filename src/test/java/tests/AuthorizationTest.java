@@ -40,7 +40,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(homeLogin.textCheck2(), valueProperties("loginInMessage"));
     }
 
-    @Test (description = "TC-2 Авторизация с НЕвалидными данными")
+    @Test(description = "TC-2 Авторизация с НЕвалидными данными")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -53,7 +53,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test (description = "TC-3 Ввод корректного логина и некорректного пароля")
+    @Test(description = "TC-3 Ввод корректного логина и некорректного пароля")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -66,7 +66,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test (description = "TC-4 Ввод некорректного логина и корректного пароля")
+    @Test(description = "TC-4 Ввод некорректного логина и корректного пароля")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -79,7 +79,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(mainPage.textCheckErrorMessage(), valueProperties("errorMessage"));
     }
 
-    @Test (description = "TC-5 Проверка поля Username пустым значением")
+    @Test(description = "TC-5 Проверка поля Username пустым значением")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -91,7 +91,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(mainPage.textCheckErrorMessageUnderFields(), valueProperties("messageUnderTheFields"));
     }
 
-    @Test (description = "TC-6 Проверка поля Password пустым значением")
+    @Test(description = "TC-6 Проверка поля Password пустым значением")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -103,7 +103,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(mainPage.textCheckErrorMessageUnderFields(), valueProperties("messageUnderTheFields"));
     }
 
-    @Test (description = "TC-7 Ввод одного символа в поле Username")
+    @Test(description = "TC-7 Ввод одного символа в поле Username")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.NORMAL)
@@ -116,7 +116,7 @@ public class AuthorizationTest extends BaseTest {
         Assert.assertEquals(mainPage.textCheckOneSymbolMessage(), valueProperties("oneSymbolMessageUsername"));
     }
 
-    @Test (description = "TC-8 Ввод одного символа в поле Password")
+    @Test(description = "TC-8 Ввод одного символа в поле Password")
     @Feature(value = "Проверка авторизации")
     @Story(value = "НЕвалидные значения")
     @Severity(value = SeverityLevel.CRITICAL)
@@ -130,7 +130,7 @@ public class AuthorizationTest extends BaseTest {
     }
 
     @Test(description = "TC-9 Авторизация с валидными и НЕвалидными данными",
-            dataProvider = "LoginDataProvider",dataProviderClass = AuthorizationTest.class)
+            dataProvider = "LoginDataProvider", dataProviderClass = AuthorizationTest.class)
     @Feature(value = "Проверка авторизации")
     @Story(value = "Валидные и НЕвалидные значения")
     @Severity(value = SeverityLevel.BLOCKER)
@@ -149,7 +149,7 @@ public class AuthorizationTest extends BaseTest {
     }
 
     @DataProvider(name = "LoginDataProvider")
-    public Object[][] getData() {
+    private Object[][] getData() {
         Object[][] data = {{valueProperties("username"), valueProperties("password"), valueProperties("username2"), true},
                 {valueProperties("username"), valueProperties("password"), valueProperties("username3"), true},
                 {valueProperties("invalidUsername"), valueProperties("invalidPassword"), valueProperties("username2"), false},
