@@ -7,10 +7,9 @@ import io.qameta.allure.Story;
 import io.qameta.allure.Description;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomeLogin;
 import pages.MainPage;
@@ -22,21 +21,9 @@ import static utils.PropertiesUtils.valueProperties;
 @Listeners(utils.ListenersUtils.class)
 public class AuthorizationTest extends BaseTest {
 
-    private MainPage mainPage;
-    private HomeLogin homeLogin;
-    private ExecutorUtils executor;
-    public static final String MAIN_URL = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
-
-    @BeforeClass
-    public void setPages() {
-        mainPage = new MainPage(driver);
-        homeLogin = new HomeLogin(driver);
-        executor = new ExecutorUtils();
-    }
-
     @BeforeMethod
-    public void setgetDriver() {
-        driver.get(MAIN_URL);
+    public void setPages() {
+        getDriver().get(MAIN_URL);
     }
 
     @Test(description = "TC-1 Авторизация с валидными данными")
@@ -45,6 +32,8 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.BLOCKER)
     @Description("Авторизация с валидными данными")
     public void validLoginTest() {
+        MainPage mainPage = new MainPage(getDriver());
+        HomeLogin homeLogin = new HomeLogin(getDriver());
         mainPage.userNameInput(valueProperties("username"))
             .passwordInput(valueProperties("password"))
             .userName2Input(valueProperties("username2"))
@@ -59,6 +48,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.CRITICAL)
     @Description("Авторизация с НЕвалидными данными")
     public void inValidLoginTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("invalidUsername"))
             .passwordInput(valueProperties("invalidPassword"))
             .userName2Input(valueProperties("username2"))
@@ -72,6 +62,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.CRITICAL)
     @Description("Авторизация с НЕвалидным паролем")
     public void inValidPasswordTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("username"))
             .passwordInput(valueProperties("invalidPassword"))
             .userName2Input(valueProperties("username2"))
@@ -85,6 +76,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.CRITICAL)
     @Description("Авторизация с НЕвалидным логином")
     public void inValidUserNameTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("invalidUsername"))
             .passwordInput(valueProperties("password"))
             .userName2Input(valueProperties("username2"))
@@ -98,6 +90,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.CRITICAL)
     @Description("Авторизация с пустым полем Username")
     public void messageUnderUsernameTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.getUserName().click();
         mainPage.passwordInput(valueProperties("password"))
             .userName2Input(valueProperties("username2"));
@@ -110,6 +103,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.CRITICAL)
     @Description("Авторизация с пустым полем Password")
     public void messageUnderPasswordTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("username"))
             .getPassword().click();
         mainPage.userName2Input(valueProperties("username2"));
@@ -122,6 +116,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.NORMAL)
     @Description("Авторизация с одним символом Username")
     public void oneSimbolUserNameTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("oneSymbol"))
            .passwordInput(valueProperties("password"))
            .userName2Input(valueProperties("username2"))
@@ -135,6 +130,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.CRITICAL)
     @Description("Авторизация с одним символом Password")
     public void oneSimbolPasswordTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("username"))
             .passwordInput(valueProperties("oneSymbol"))
             .userName2Input(valueProperties("username2"))
@@ -149,6 +145,8 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.BLOCKER)
     @Description("Авторизация с валидными и НЕ валидными данными")
     public void validInvalidLoginTest(String userName, String password, String username2, Boolean expectResult) {
+        MainPage mainPage = new MainPage(getDriver());
+        HomeLogin homeLogin = new HomeLogin(getDriver());
         mainPage.userNameInput(userName)
             .passwordInput(password)
             .userName2Input(username2)
@@ -176,6 +174,8 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.TRIVIAL)
     @Description("Падающий тест - Проверка создания скриншота")
     public void validLoginErrorTest() {
+        MainPage mainPage = new MainPage(getDriver());
+        HomeLogin homeLogin = new HomeLogin(getDriver());
         mainPage.userNameInput(valueProperties("username"))
             .passwordInput(valueProperties("password"))
             .userName2Input(valueProperties("username2"))
@@ -189,6 +189,7 @@ public class AuthorizationTest extends BaseTest {
     @Severity(value = SeverityLevel.TRIVIAL)
     @Description("Падающий тест - Проверка создания скриншота")
     public void inValidLoginErrorTest() {
+        MainPage mainPage = new MainPage(getDriver());
         mainPage.userNameInput(valueProperties("invalidUsername"))
             .passwordInput(valueProperties("invalidPassword"))
             .userName2Input(valueProperties("username2"))
@@ -200,15 +201,18 @@ public class AuthorizationTest extends BaseTest {
     @Feature(value = "Проверка работы JavaScriptExecutor")
     @Description("Отвод фокуса с поля ввода Username")
     public void executorFocus() {
+        MainPage mainPage = new MainPage(getDriver());
+        ExecutorUtils executor = new ExecutorUtils();
         mainPage.getUserName().click();
         executor.shiftFocusFromUsernameField();
-        Assert.assertFalse(mainPage.getUserName().equals(driver.switchTo().activeElement()));
+        Assert.assertFalse(mainPage.getUserName().equals(getDriver().switchTo().activeElement()));
     }
 
     @Test(description = "Проверка на отсутствие скролла на странице")
     @Feature(value = "Проверка работы JavaScriptExecutor")
     @Description("Проверка скролла")
     public void executorScroll() {
+        ExecutorUtils executor = new ExecutorUtils();
         boolean scrollVertical = executor.executeScriptHeight();
         boolean scrollHorizontal = executor.executeScriptWidth();
         boolean result = scrollVertical && scrollHorizontal;

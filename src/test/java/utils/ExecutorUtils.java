@@ -10,7 +10,7 @@ public class ExecutorUtils {
     private String scriptWidth = "return document.documentElement.scrollWidth>document.documentElement.clientWidth";
 
     private JavascriptExecutor getJavascriptExecutor() {
-        return (JavascriptExecutor) BaseTest.driver ;
+        return (JavascriptExecutor) BaseTest.driver.get();
     }
 
     @Step("Отводим фокус с поля ввода Username")
