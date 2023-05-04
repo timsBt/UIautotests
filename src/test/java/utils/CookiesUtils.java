@@ -11,7 +11,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.StringTokenizer;
 
-
 public class CookiesUtils {
 
     File file = new File("Cookies.data");
