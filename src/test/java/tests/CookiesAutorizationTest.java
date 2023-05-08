@@ -17,24 +17,42 @@ import java.io.File;
 
 import static utils.PropertiesUtils.valueProperties;
 
+/**
+ * Тест авторизации с помощью Cookies на странице Упражнения по SQL.
+ */
 @Epic(value = "UI Tests")
 public class CookiesAutorizationTest extends BaseTest {
-    private final String sqlPageUrl = "https://sql-ex.ru/";
 
-    private File file = new File("Cookies.data");
+    /**
+     * Объявление экземпляра файла.
+     */
+    private final File file = new File("Cookies.data");
 
-    @Test(description = "Авторизация с помощью cookies из файла", invocationCount = 3)
+    /**
+     * Объявление переменной (количество запусков теста).
+     */
+    private final int count = 3;
+
+    /**
+     * Тест авторизации с помощью Cookies.
+     *
+     * @param testContext Данные теста
+     */
+    @Test(description = "Авторизация с помощью cookies из файла",
+            invocationCount = count)
     @Feature(value = "Проверка авторизации")
     @Story(value = "Cookies")
     @Severity(value = SeverityLevel.BLOCKER)
     @Description("Авторизация с помощью cookies из файла")
-    public void loginCookiesTest(ITestContext testContext) {
+    public void loginCookiesTest(final ITestContext testContext) {
         SqlPage sqlPage = new SqlPage(getDriver());
         CookiesUtils cookiesUtils = new CookiesUtils(getDriver());
-        getDriver().get(sqlPageUrl);
-        int currentCount = testContext.getAllTestMethods()[0].getCurrentInvocationCount();
+        getDriver().get(valueProperties("sqlPageUrl"));
+        int currentCount = testContext.getAllTestMethods()[0]
+            .getCurrentInvocationCount();
         if (currentCount == 0 && !file.isFile()) {
-            sqlPage.loginSql(valueProperties("usernameSql"), valueProperties("passwordSql"));
+            sqlPage.loginSql(valueProperties("usernameSql"),
+                    valueProperties("passwordSql"));
             Assert.assertEquals(sqlPage.textName(), valueProperties("name"));
             cookiesUtils.writeCookieToFile();
             getDriver().manage().deleteAllCookies();
@@ -48,6 +66,9 @@ public class CookiesAutorizationTest extends BaseTest {
         }
     }
 
+    /**
+     * Метод удаления файла с Cookies после всех тестов.
+     */
     @AfterClass
     public void deleteCookiesFile() {
         CookiesUtils cookiesUtils = new CookiesUtils(getDriver());

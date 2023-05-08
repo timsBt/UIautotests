@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Local Browser Tests" parallel="tests" thread-count="4">
+    <test name="Test On Chrome">
+        <parameter name="BrowserType" value="Chrome"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+    <test name="Test On Edge">
+        <parameter name="BrowserType" value="Edge"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+    <test name="Test On Firefox">
+        <parameter name="BrowserType" value="Firefox"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+    <test name="Test On InternetExplorer">
+        <parameter name="BrowserType" value="IE"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+</suite>

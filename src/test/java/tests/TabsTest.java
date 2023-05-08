@@ -11,22 +11,33 @@ import pages.NewBroserTabsPage;
 
 import java.util.ArrayList;
 
+import static utils.PropertiesUtils.valueProperties;
+
+/**
+ * Тест работы со вкладками и ссылками на странице Frames And Windows.
+ */
 @Epic(value = "UI Tests")
 public class TabsTest extends BaseTest {
 
-    private final String tabsUrl = "http://way2automation.com/way2auto_jquery/frames-and-windows.php";
-
+    /**
+     * Метод открытия страницы.
+     */
     @BeforeMethod
     public void openPage() {
-        getDriver().get(tabsUrl);
+        getDriver().get(valueProperties("tabsPageUrl"));
     }
 
+    /**
+     * Тест открытия новых вкладок.
+     */
     @Test(description = "Открытие новых вкладок")
     @Feature(value = "Проверка работы Tabs")
     @Description("Открытие новых вкладок")
     public void tabsFrameTest() {
-        FramesAndWindowsPage framesAndWindowsPage = new FramesAndWindowsPage(getDriver());
-        NewBroserTabsPage newBroserTabsPage = new NewBroserTabsPage(getDriver());
+        FramesAndWindowsPage framesAndWindowsPage = new FramesAndWindowsPage(
+                getDriver());
+        NewBroserTabsPage newBroserTabsPage = new NewBroserTabsPage(
+                getDriver());
         framesAndWindowsPage.switchToFrame()
             .clickButton();
         for (String tab : getDriver().getWindowHandles()) {
@@ -34,6 +45,8 @@ public class TabsTest extends BaseTest {
         }
         newBroserTabsPage.clickButtonNewBrowserPage();
         ArrayList<String> tabs2 = new ArrayList(getDriver().getWindowHandles());
-        Assert.assertEquals(tabs2.size(), 3, "Количество вкладок должно быть 3!");
+        final int count = 3;
+        Assert.assertEquals(tabs2.size(), count,
+                "Количество вкладок должно быть 3!");
     }
 }

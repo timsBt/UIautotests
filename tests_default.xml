@@ -6,6 +6,8 @@
             <class name="tests.AuthorizationTest"/>
             <class name="tests.CookiesAutorizationTest"/>
             <class name="tests.DragAndDropTest"/>
+            <class name="tests.AlertTest"/>
+            <class name="tests.BasicAuthTest"/>
             <class name="tests.TabsTest"/>
         </classes>
     </test>

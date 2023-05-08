@@ -8,23 +8,32 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DragAndDropPage;
 
+import static utils.PropertiesUtils.valueProperties;
+
+/**
+ * Тест перетаскивания элемента на странице Droppable.
+ */
 @Epic(value = "UI Tests")
 public class DragAndDropTest extends BaseTest {
 
-    private final String dropUrl = "http://way2automation.com/way2auto_jquery/droppable.php";
-
+    /**
+     * Метод открытия страницы.
+     */
     @BeforeMethod
     public void openPage() {
-        getDriver().get(dropUrl);
+        getDriver().get(valueProperties("droppblePageUrl"));
     }
 
+    /**
+     * Тест перетаскивания элемента.
+     */
     @Test(description = "Перетаскивание элемента")
     @Feature(value = "Проверка работы DragAndDrop")
     @Description("Перетаскивание элемента")
     public void actionTest() {
         DragAndDropPage dragAndDropPage = new DragAndDropPage(getDriver());
-        dragAndDropPage.switchToFrame();
-        dragAndDropPage.dragNDrop();
+        dragAndDropPage.switchToFrame()
+            .dragNDrop();
         Assert.assertEquals(dragAndDropPage.getTextDropp(), "Dropped!");
     }
 }
