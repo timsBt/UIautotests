@@ -23,7 +23,7 @@ public class CookiesUtils {
     public void writeCookieToFile() {
         try {
             FileWriter fileWrite = new FileWriter(file);
-            for (Cookie cookie : BaseTest.driver.manage().getCookies()) {
+            for (Cookie cookie : BaseTest.driver.get().manage().getCookies()) {
                 fileWrite.write((cookie.getName() + " = " + cookie.getValue()) + "\n");
             }
             fileWrite.close();
@@ -44,7 +44,7 @@ public class CookiesUtils {
                     String name = tokenizer.nextToken();
                     String value = tokenizer.nextToken();
                     Cookie cookie = new Cookie(name, value);
-                    BaseTest.driver.manage().addCookie(cookie);
+                    BaseTest.driver.get().manage().addCookie(cookie);
                 }
             }
             bufferedReader.close();

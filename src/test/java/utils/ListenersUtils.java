@@ -16,6 +16,6 @@ public class ListenersUtils implements ITestListener {
 
     @Attachment(value = "Attachment Screenshot", type = "image/png")
     public byte[] makeScreenshot() {
-        return ((TakesScreenshot) BaseTest.driver).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) BaseTest.driver.get()).getScreenshotAs(OutputType.BYTES);
     }
 }
