@@ -7,52 +7,58 @@ import io.qameta.allure.Story;
 import io.qameta.allure.Description;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
+import org.testng.ITestContext;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.SqlPage;
-import utils.CookiesFiles;
+import utils.CookiesUtils;
 
-import static utils.ValueProperties.valueProperties;
+import java.io.File;
+
+
+import static utils.PropertiesUtils.valueProperties;
 
 @Epic(value = "UI Tests")
 public class CookiesAutorizationTest extends BaseTest {
 
     public static final String SQLPAGE_URL = "https://sql-ex.ru/";
     private SqlPage sqlPage;
-    private CookiesFiles cookiesFiles;
+    private CookiesUtils cookiesUtils;
+    private File file = new File("Cookies.data");
 
     @BeforeClass
     public void setSqlPage() {
         sqlPage = new SqlPage(driver);
-        cookiesFiles = new CookiesFiles();
+        cookiesUtils = new CookiesUtils(driver);
     }
 
-    @BeforeMethod
-    public void getDriver() {
-        driver.get(SQLPAGE_URL);
-    }
-
-    @Test(description = "Авторизация при первом запуске", priority = 1)
+    @Test(description = "Авторизация с помощью cookies из файла", invocationCount = 3)
     @Feature(value = "Проверка авторизации")
-    @Story(value = "Валидные значения")
-    @Severity(value = SeverityLevel.BLOCKER)
-    @Description("Авторизация при первом запуске")
-    public void loginTest() {
-        sqlPage.loginInput(valueProperties("usernameSql"))
-            .passwordInput(valueProperties("passwordSql"))
-            .emptyButtonClick();
-        cookiesFiles.fileWrite();
-        Assert.assertEquals(sqlPage.textName(), valueProperties("name"));
-    }
-
-    @Test(description = "Авторизация с помощью cookies из файла", priority = 2)
-    @Feature(value = "Проверка авторизации")
-    @Story(value = "Значения cookies")
+    @Story(value = "Cookies")
     @Severity(value = SeverityLevel.BLOCKER)
     @Description("Авторизация с помощью cookies из файла")
-    public void loginCookiesTest() {
-        cookiesFiles.fileRead(SQLPAGE_URL);
-        Assert.assertEquals(sqlPage.textName(), valueProperties("name"));
+    public void loginCookiesTest(ITestContext testContext) {
+        driver.get(SQLPAGE_URL);
+        int currentCount = testContext.getAllTestMethods()[0].getCurrentInvocationCount();
+        if (currentCount == 0 && !file.isFile()) {
+            sqlPage.loginSql(valueProperties("usernameSql"), valueProperties("passwordSql"));
+            Assert.assertEquals(sqlPage.textName(), valueProperties("name"));
+            cookiesUtils.writeCookieToFile();
+            driver.manage().deleteAllCookies();
+            sqlPage.logOut();
+        } else if (currentCount > 0 && file.isFile()) {
+            cookiesUtils.readCookieFromFile();
+            driver.navigate().refresh();
+            Assert.assertEquals(sqlPage.textName(), valueProperties("name"));
+            driver.manage().deleteAllCookies();
+            sqlPage.logOut();
+        }
+    }
+
+    @AfterClass
+    public void deleteCookiesFile() {
+        cookiesUtils.deleteCookiesFile();
     }
 }
+

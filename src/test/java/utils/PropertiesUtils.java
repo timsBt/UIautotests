@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-public class ValueProperties {
+public class PropertiesUtils {
 
     public static String valueProperties(String param) {
         try {
