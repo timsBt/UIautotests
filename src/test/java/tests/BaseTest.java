@@ -11,7 +11,6 @@ import static utils.ChromeDriverUtils.getChromeDriver;
 public class BaseTest {
 
     public static ThreadLocal<WebDriver> driver = new InheritableThreadLocal<>();
-    public static final String MAIN_URL = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
 
     @BeforeMethod
     public void setUp() {
