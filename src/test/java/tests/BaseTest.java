@@ -1,8 +1,12 @@
 package tests;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import utils.RetryClassUtils;
 
 import java.time.Duration;
 
@@ -11,6 +15,13 @@ import static utils.ChromeDriverUtils.getChromeDriver;
 public class BaseTest {
 
     public static ThreadLocal<WebDriver> driver = new InheritableThreadLocal<>();
+
+    @BeforeSuite
+    public void setRetry(ITestContext context) {
+        for (ITestNGMethod method : context.getAllTestMethods()) {
+            method.setRetryAnalyzerClass(RetryClassUtils.class);
+        }
+    }
 
     @BeforeMethod
     public void setUp() {
@@ -25,7 +36,7 @@ public class BaseTest {
 
     @AfterMethod
     public void tearDown() {
-        driver.get().close();
+        driver.get().quit();
         driver.remove();
     }
 }

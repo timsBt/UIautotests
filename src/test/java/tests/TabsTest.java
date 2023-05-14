@@ -14,11 +14,11 @@ import java.util.ArrayList;
 @Epic(value = "UI Tests")
 public class TabsTest extends BaseTest {
 
-    private final String tabs_url = "http://way2automation.com/way2auto_jquery/frames-and-windows.php";
+    private final String tabsUrl = "http://way2automation.com/way2auto_jquery/frames-and-windows.php";
 
     @BeforeMethod
     public void openPage() {
-        getDriver().get(tabs_url);
+        getDriver().get(tabsUrl);
     }
 
     @Test(description = "Открытие новых вкладок")

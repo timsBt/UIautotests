@@ -11,11 +11,11 @@ import pages.DragAndDropPage;
 @Epic(value = "UI Tests")
 public class DragAndDropTest extends BaseTest {
 
-    private final String drop_url = "http://way2automation.com/way2auto_jquery/droppable.php";
+    private final String dropUrl = "http://way2automation.com/way2auto_jquery/droppable.php";
 
     @BeforeMethod
     public void openPage() {
-        getDriver().get(drop_url);
+        getDriver().get(dropUrl);
     }
 
     @Test(description = "Перетаскивание элемента")

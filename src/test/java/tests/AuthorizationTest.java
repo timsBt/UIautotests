@@ -21,11 +21,11 @@ import static utils.PropertiesUtils.valueProperties;
 @Listeners(utils.ListenersUtils.class)
 public class AuthorizationTest extends BaseTest {
 
-    private final String main_url = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
+    private final String mainUrl = "https://www.way2automation.com/angularjs-protractor/registeration/#/login";
 
     @BeforeMethod
     public void openPage() {
-        getDriver().get(main_url);
+        getDriver().get(mainUrl);
     }
 
     @Test(description = "TC-1 Авторизация с валидными данными")

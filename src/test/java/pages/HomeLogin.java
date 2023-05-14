@@ -16,10 +16,10 @@ public class HomeLogin {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath =  "//h1[@class =  'ng-scope']")
+    @FindBy(xpath = "//h1[@class =  'ng-scope']")
     private WebElement homeMessage;
 
-    @FindBy(xpath =  "//p[@class =  'ng-scope']")
+    @FindBy(xpath = "//p[@class =  'ng-scope']")
     private WebElement loginInMessage;
 
     public WebElement getHomeMessage() {
@@ -46,4 +46,3 @@ public class HomeLogin {
         Assert.assertTrue(element.isDisplayed());
     }
 }
-

@@ -18,12 +18,12 @@
     </properties>
 
     <dependencies>
-          <dependency>
-              <groupId>org.testng</groupId>
-              <artifactId>testng</artifactId>
-              <version>7.4.0</version>
-              <scope>test</scope>
-          </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -65,7 +65,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFileName}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <systemProperties>
                         <property>
                             <name>allure.results.directory</name>
@@ -91,4 +96,33 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>smoke_tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>smoke</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <suiteXmlFileName>tests_default.xml</suiteXmlFileName>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>failed_tests</id>
+            <activation>
+                <property>
+                    <name>failed</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <suiteXmlFileName>target/surefire-reports/testng-failed.xml</suiteXmlFileName>
+            </properties>
+        </profile>
+    </profiles>
 </project>

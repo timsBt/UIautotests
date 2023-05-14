@@ -19,7 +19,7 @@ import static utils.PropertiesUtils.valueProperties;
 
 @Epic(value = "UI Tests")
 public class CookiesAutorizationTest extends BaseTest {
-    private final String sqlPage_url = "https://sql-ex.ru/";
+    private final String sqlPageUrl = "https://sql-ex.ru/";
 
     private File file = new File("Cookies.data");
 
@@ -31,7 +31,7 @@ public class CookiesAutorizationTest extends BaseTest {
     public void loginCookiesTest(ITestContext testContext) {
         SqlPage sqlPage = new SqlPage(getDriver());
         CookiesUtils cookiesUtils = new CookiesUtils(getDriver());
-        getDriver().get(sqlPage_url);
+        getDriver().get(sqlPageUrl);
         int currentCount = testContext.getAllTestMethods()[0].getCurrentInvocationCount();
         if (currentCount == 0 && !file.isFile()) {
             sqlPage.loginSql(valueProperties("usernameSql"), valueProperties("passwordSql"));
