@@ -11,8 +11,7 @@ public class PropertiesUtils {
             Properties props = new Properties();
             props.load(new InputStreamReader(new FileInputStream("src/main/resources/aplication.properties"), "UTF-8"));
             return props.getProperty(param);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
         }
         return param;
     }
