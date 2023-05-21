@@ -1,41 +1,30 @@
 package tests;
 
 import drivers.DriverFactory;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.openqa.selenium.WebDriver;
-import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
-import org.testng.annotations.BeforeSuite;
-import utils.RetryClassUtils;
 
 import java.net.MalformedURLException;
 import java.time.Duration;
 
-/**
- * Базовый класс с настройками для всех тестов.
- */
-public class BaseTest {
+@Epic(value = "UI Tests")
+@Feature(value = "Проверка авторизации Cucumber")
+@CucumberOptions(features = {"src/test/java/cucumber/autorization.feature"},
+        glue = {"cucumber"})
+public class RunnerTest extends AbstractTestNGCucumberTests {
 
     /**
      * Объявление экземпляра драйвера.
      */
     private static final ThreadLocal<WebDriver> DRIVER
             = new InheritableThreadLocal<>();
-
-    /**
-     * Метод логики перезапуска теста.
-     *
-     * @param context Информация о запускаемом тесте
-     */
-    @BeforeSuite
-    public void setRetry(final ITestContext context) {
-        for (ITestNGMethod method : context.getAllTestMethods()) {
-            method.setRetryAnalyzerClass(RetryClassUtils.class);
-        }
-    }
 
     /**
      * Метод настройки и выбора браузера перед тестом.
