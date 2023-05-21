@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Remote Browser Tests" parallel="tests" thread-count="4">
+    <test name="Test On Chrome">
+        <parameter name="BrowserType" value="Chrome"/>
+        <parameter name="Remote" value="true"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+    <test name="Test On Edge">
+        <parameter name="BrowserType" value="Edge"/>
+        <parameter name="Remote" value="true"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+    <test name="Test On Firefox">
+        <parameter name="BrowserType" value="Firefox"/>
+        <parameter name="Remote" value="true"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+    <test name="Test On InternetExplorer">
+        <parameter name="BrowserType" value="IE"/>
+        <parameter name="Remote" value="true"/>
+        <packages>
+            <package name="tests"/>
+        </packages>
+    </test>
+</suite>

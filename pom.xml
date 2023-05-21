@@ -124,5 +124,31 @@
                 <suiteXmlFileName>target/surefire-reports/testng-failed.xml</suiteXmlFileName>
             </properties>
         </profile>
+
+        <profile>
+            <id>cross_local_tests</id>
+            <activation>
+                <property>
+                    <name>local</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <suiteXmlFileName>cross_local_start.xml</suiteXmlFileName>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>cross_remote_tests</id>
+            <activation>
+                <property>
+                    <name>remote</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <suiteXmlFileName>cross_remote_start.xml</suiteXmlFileName>
+            </properties>
+        </profile>
     </profiles>
 </project>
