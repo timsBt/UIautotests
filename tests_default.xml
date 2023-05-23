@@ -9,6 +9,7 @@
             <class name="tests.AlertTest"/>
             <class name="tests.BasicAuthTest"/>
             <class name="tests.TabsTest"/>
+            <class name="tests.RunnerTest"/>
         </classes>
     </test>
 </suite>
