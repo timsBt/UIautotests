@@ -66,6 +66,23 @@
             <artifactId>cucumber-testng</artifactId>
             <version>7.11.2</version>
         </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-maven-plugin</artifactId>
+            <version>1.18.20.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -158,6 +175,19 @@
             </activation>
             <properties>
                 <suiteXmlFileName>cross_remote_start.xml</suiteXmlFileName>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>api_tests</id>
+            <activation>
+                <property>
+                    <name>api</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <suiteXmlFileName>api_tests_wordPress.xml</suiteXmlFileName>
             </properties>
         </profile>
     </profiles>
