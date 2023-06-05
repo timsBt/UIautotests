@@ -5,6 +5,8 @@
         <classes>
             <class name="api.tests.PostTest"/>
             <class name="api.tests.CommentTest"/>
+            <class name="api.tests.DBPostTest"/>
+            <class name="api.tests.DBCommentTest"/>
         </classes>
     </test>
 </suite>
