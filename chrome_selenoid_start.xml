@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenoid Tests" parallel="tests" thread-count="4">
+<suite name="Selenoid Tests" parallel="classes" thread-count="5">
     <test name="Test On Chrome">
         <parameter name="BrowserType" value="Chrome"/>
         <parameter name="Remote" value="true"/>
-        <packages>
-            <package name="tests"/>
-        </packages>
+        <classes>
+            <class name="tests.AuthorizationTest"/>
+            <class name="tests.CookiesAutorizationTest"/>
+            <class name="tests.DragAndDropTest"/>
+            <class name="tests.AlertTest"/>
+            <class name="tests.BasicAuthTest"/>
+            <class name="tests.TabsTest"/>
+            <class name="tests.RunnerTest"/>
+        </classes>
     </test>
 </suite>
