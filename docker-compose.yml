@@ -1,0 +1,33 @@
+version: '3.5'
+services:
+  selenoid:
+    network_mode: bridge
+    container_name: selenoid
+    image: "aerokube/selenoid:latest-release"
+    ports:
+      - "4443:4444"
+    volumes:
+      - ".:/etc/selenoid"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    command: ["-conf", "/etc/selenoid/browsers.json", "UIautotests_selenoid", "-limit", "10", "-retry-count", "2"]
+  selenoid-ui:
+    network_mode: bridge
+    container_name: selenoid-ui
+    image: "aerokube/selenoid-ui:latest-release"
+    links:
+      - selenoid
+    ports:
+      - "8081:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+  test:
+    network_mode: bridge
+    image: voyant/maven-openjdk16
+    volumes:
+        - .:/app
+        - maven-cache:/root/.m2
+    working_dir: /app
+    links:
+      - selenoid
+    command: mvn clean test -P chrome_selenoid_tests
+volumes:
+      maven-cache:

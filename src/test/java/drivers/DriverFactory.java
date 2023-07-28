@@ -17,6 +17,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  * Класс создания WebDrivers для запуска браузеров удаленно и локально.
@@ -83,8 +84,10 @@ public final class DriverFactory {
             ChromeOptions chromeOptions = new ChromeOptions();
             capabilities.setBrowserName(Browser.CHROME.browserName());
             capabilities.setPlatform(Platform.WIN11);
+            chromeOptions.setCapability("selenoid:options", new HashMap<String,
+                    Object>() {{ put("enableVNC", true); }});
             chromeOptions.merge(capabilities);
-            return new RemoteWebDriver(new URL("http://localhost:4444/"),
+            return new RemoteWebDriver(new URL("http://selenoid:4444/wd/hub"),
                     chromeOptions);
         } else if (browserType.equalsIgnoreCase("Edge")) {
             EdgeOptions edgeOptions = new EdgeOptions();
