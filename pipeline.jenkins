@@ -1,21 +1,26 @@
  pipeline {
     agent any
- stages {
-      stage('Build') {
-        steps {
-      	  bat 'docker-compose -f docker-compose.yml up --abort-on-container-exit'
+
+     triggers {
+          pollSCM('* * * * *')
+       }
+
+     stages {
+          stage('Build') {
+            steps {
+              bat 'docker-compose -f docker-compose.yml up --abort-on-container-exit'
+                }
             }
-        }
- }
- post {
-     always {
-            allure([
-               	   includeProperties: false,
-               	   jdk: '',
-               	   properties: [],
-               	   reportBuildPolicy: 'ALWAYS',
-               	   results: [[path: 'target/allure-results']]
-             	   ])
      }
-  }
+     post {
+          always {
+                allure([
+                       includeProperties: false,
+                       jdk: '',
+                       properties: [],
+                       reportBuildPolicy: 'ALWAYS',
+                       results: [[path: 'target/allure-results']]
+                       ])
+         }
+      }
  }
