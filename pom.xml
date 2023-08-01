@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>6.15.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.4.0</version>
@@ -188,6 +193,19 @@
             </activation>
             <properties>
                 <suiteXmlFileName>api_tests_wordPress.xml</suiteXmlFileName>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>chrome_selenoid_tests</id>
+            <activation>
+                <property>
+                    <name>remote</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <suiteXmlFileName>chrome_selenoid_start.xml</suiteXmlFileName>
             </properties>
         </profile>
     </profiles>
