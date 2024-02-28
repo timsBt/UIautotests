@@ -163,3 +163,5 @@ public class AuthorizationDefs {
         Assert.assertEquals(mainPage.textCheckOneSymbolMessage(), errorMessage);
     }
 }
+
+
